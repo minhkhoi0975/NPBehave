@@ -12,78 +12,29 @@ namespace NPBehave
         }
 
         protected State currentState = State.INACTIVE;
-
-        public State CurrentState
-        {
-            get { return currentState; }
-        }
+        public State CurrentState => currentState;
 
         public Root RootNode;
 
         private Container parentNode;
-        public Container ParentNode
-        {
-            get
-            {
-                return parentNode;
-            }
-        }
+        public Container ParentNode => parentNode;
 
         private string label;
-
         public string Label
         {
-            get
-            {
-                return label;
-            }
-            set
-            {
-                label = value;
-            }
+            get => label;
+            set => label = value;
         }
 
         private string name;
+        public string Name => name;
 
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
+        public virtual Blackboard Blackboard => RootNode.Blackboard;
+        public virtual Clock Clock => RootNode.Clock;
 
-        public virtual Blackboard Blackboard
-        {
-            get
-            {
-                return RootNode.Blackboard;
-            }
-        }
+        public bool IsStopRequested => currentState == State.STOP_REQUESTED;
 
-        public virtual Clock Clock
-        {
-            get
-            {
-                return RootNode.Clock;
-            }
-        }
-
-        public bool IsStopRequested
-        {
-            get
-            {
-                return this.currentState == State.STOP_REQUESTED;
-            }
-        }
-
-        public bool IsActive
-        {
-            get
-            {
-                return this.currentState == State.ACTIVE;
-            }
-        }
+        public bool IsActive => currentState == State.ACTIVE;
 
 
         public Node(string name)

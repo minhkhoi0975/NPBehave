@@ -9,23 +9,10 @@ namespace NPBehave
         //private Node inProgressNode;
 
         private Blackboard blackboard;
-        public override Blackboard Blackboard
-        {
-            get
-            {
-                return blackboard;
-            }
-        }
-
+        public override Blackboard Blackboard => blackboard;
 
         private Clock clock;
-        public override Clock Clock
-        {
-            get
-            {
-                return clock;
-            }
-        }
+        public override Clock Clock => clock;
 
 #if UNITY_EDITOR
         public int TotalNumStartCalls = 0;
