@@ -10,8 +10,8 @@ namespace NPBehave
             TestRoot behaviorTree = null;
             MockNode child = new MockNode();
             BlackboardQuery sut = new BlackboardQuery(new string[]{"key1", "key2"}, Stops.IMMEDIATE_RESTART, () => {
-                object o1 = behaviorTree.Blackboard.Get<float>("key1");
-                object o2 = behaviorTree.Blackboard.Get<float>("key2");
+                object o1 = behaviorTree.Blackboard.GetBlackboardValue<float>("key1");
+                object o2 = behaviorTree.Blackboard.GetBlackboardValue<float>("key2");
                 float f1 = (float)o1;
                 float f2 = (float)o2;
 

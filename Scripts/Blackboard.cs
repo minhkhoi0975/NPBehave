@@ -49,48 +49,35 @@ namespace NPBehave
         public void Enable()
         {
             if (this.parentBlackboard != null)
-            {
                 this.parentBlackboard.children.Add(this);
-            }
         }
 
         public void Disable()
         {
             if (this.parentBlackboard != null)
-            {
                 this.parentBlackboard.children.Remove(this);
-            }
+
             if (this.clock != null)
-            {
                 this.clock.RemoveTimer(this.NotifiyObservers);
-            }
         }
 
         public object this[string key]
         {
-            get
-            {
-                return Get(key);
-            }
-            set
-            {
-                Set(key, value);
-            }
+            get => GetBlackboardValue(key);
+            set => SetBlackboardValue(key, value);
         }
 
-        public void Set(string key)
+        public void SetBlackboardValue(string key)
         {
-            if (!Isset(key))
-            {
-                Set(key, null);
-            }
+            if (!IsSet(key))
+                SetBlackboardValue(key, null);
         }
 
-        public void Set(string key, object value)
+        public void SetBlackboardValue(string key, object value)
         {
-            if (this.parentBlackboard != null && this.parentBlackboard.Isset(key))
+            if (this.parentBlackboard != null && this.parentBlackboard.IsSet(key))
             {
-                this.parentBlackboard.Set(key, value);
+                this.parentBlackboard.SetBlackboardValue(key, value);
             }
             else
             {
@@ -125,35 +112,35 @@ namespace NPBehave
         [System.Obsolete("Use Get<T> instead")]
         public bool GetBool(string key)
         {
-            return Get<bool>(key);
+            return GetBlackboardValue<bool>(key);
         }
 
         [System.Obsolete("Use Get<T> instead - WARNING: return value for non-existant key will be 0.0f instead of float.NaN")]
         public float GetFloat(string key)
         {
-            object result = Get(key);
+            object result = GetBlackboardValue(key);
             if (result == null)
             {
                 return float.NaN;
             }
-            return (float)Get(key);
+            return (float)GetBlackboardValue(key);
         }
 
         [System.Obsolete("Use Get<T> instead")]
         public Vector3 GetVector3(string key)
         {
-            return Get<Vector3>(key);
+            return GetBlackboardValue<Vector3>(key);
         }
 
         [System.Obsolete("Use Get<T> instead")]
         public int GetInt(string key)
         {
-            return Get<int>(key);
+            return GetBlackboardValue<int>(key);
         }
 
-        public T Get<T>(string key)
+        public T GetBlackboardValue<T>(string key)
         {
-            object result = Get(key);
+            object result = GetBlackboardValue(key);
             if (result == null)
             {
                 return default(T);
@@ -161,7 +148,7 @@ namespace NPBehave
             return (T)result;
         }
 
-        public object Get(string key)
+        public object GetBlackboardValue(string key)
         {
             if (this.data.ContainsKey(key))
             {
@@ -169,7 +156,7 @@ namespace NPBehave
             }
             else if (this.parentBlackboard != null)
             {
-                return this.parentBlackboard.Get(key);
+                return this.parentBlackboard.GetBlackboardValue(key);
             }
             else
             {
@@ -177,9 +164,9 @@ namespace NPBehave
             }
         }
 
-        public bool Isset(string key)
+        public bool IsSet(string key)
         {
-            return this.data.ContainsKey(key) || (this.parentBlackboard != null && this.parentBlackboard.Isset(key));
+            return this.data.ContainsKey(key) || (this.parentBlackboard != null && this.parentBlackboard.IsSet(key));
         }
 
         public void AddObserver(string key, System.Action<Type, object> observer)

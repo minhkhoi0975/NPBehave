@@ -73,7 +73,7 @@ namespace NPBehave
 
         private void moveToBlackboardKey()
         {
-            object target = Blackboard.Get(blackboardKey);
+            object target = Blackboard.GetBlackboardValue(blackboardKey);
             if (target == null)
             {
                 stopAndCleanUp(false);

@@ -47,7 +47,7 @@ public class NPBehaveExampleEnemyAI : MonoBehaviour
                             {
                                 if (!_shouldCancel)
                                 {
-                                    MoveTowards(blackboard.Get<Vector3>("playerLocalPos"));
+                                    MoveTowards(blackboard.GetBlackboardValue<Vector3>("playerLocalPos"));
                                     return Action.Result.PROGRESS;
                                 }
                                 else

@@ -70,12 +70,12 @@ namespace NPBehave
                 return true;
             }
 
-            if (!this.RootNode.Blackboard.Isset(key))
+            if (!this.RootNode.Blackboard.IsSet(key))
             {
                 return op == Operator.IS_NOT_SET;
             }
 
-            object o = this.RootNode.Blackboard.Get(key);
+            object o = this.RootNode.Blackboard.GetBlackboardValue(key);
 
             switch (this.op)
             {

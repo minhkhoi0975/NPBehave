@@ -24,7 +24,7 @@ namespace NPBehave
                 notified = true;
             });
 
-            this.sut.Set("test", 1f);
+            this.sut.SetBlackboardValue("test", 1f);
             Assert.IsFalse(notified);
         }
 
@@ -37,7 +37,7 @@ namespace NPBehave
                 notified = true;
             });
 
-            this.sut.Set("test", 1f);
+            this.sut.SetBlackboardValue("test", 1f);
             this.clock.Update(1f);
             Assert.IsTrue(notified);
         }
@@ -64,7 +64,7 @@ namespace NPBehave
             this.sut.AddObserver("test", obs1);
             this.sut.AddObserver("test", obs2);
 
-            this.sut.Set("test", 1f);
+            this.sut.SetBlackboardValue("test", 1f);
             this.clock.Update(1f);
             Assert.IsTrue(notified);
         }
@@ -72,22 +72,22 @@ namespace NPBehave
         [Test]
         public void ShouldAllowToSetToNull_WhenAlreadySertToNull()
         {
-            this.sut.Set("test", 1f);
-            Assert.AreEqual(this.sut.Get("test"), 1f);
-            this.sut.Set("test", null);
-            this.sut.Set("test", null);
-            Assert.AreEqual(this.sut.Get("test"), null);
-            this.sut.Set("test", "something");
-            Assert.AreEqual(this.sut.Get("test"), "something");
+            this.sut.SetBlackboardValue("test", 1f);
+            Assert.AreEqual(this.sut.GetBlackboardValue("test"), 1f);
+            this.sut.SetBlackboardValue("test", null);
+            this.sut.SetBlackboardValue("test", null);
+            Assert.AreEqual(this.sut.GetBlackboardValue("test"), null);
+            this.sut.SetBlackboardValue("test", "something");
+            Assert.AreEqual(this.sut.GetBlackboardValue("test"), "something");
         }
 
         [Test]
         public void NewDefaultValuesShouldBeCompatible()
         {
-            Assert.AreEqual(this.sut.Get<bool>("not-existing"), this.sut.GetBool("not-existing"));
-            Assert.AreEqual(this.sut.Get<int>("not-existing"), this.sut.GetInt("not-existing"));
+            Assert.AreEqual(this.sut.GetBlackboardValue<bool>("not-existing"), this.sut.GetBool("not-existing"));
+            Assert.AreEqual(this.sut.GetBlackboardValue<int>("not-existing"), this.sut.GetInt("not-existing"));
             //            Assert.AreEqual(this.sut.Get<float>("not-existing"), this.sut.GetFloat("not-existing"));
-            Assert.AreEqual(this.sut.Get<UnityEngine.Vector3>("not-existing"), this.sut.GetVector3("not-existing"));
+            Assert.AreEqual(this.sut.GetBlackboardValue<UnityEngine.Vector3>("not-existing"), this.sut.GetVector3("not-existing"));
         }
 
 
@@ -111,7 +111,7 @@ namespace NPBehave
             TestRoot behaviorTree = new TestRoot(blackboard, clock, selector);
 
             // intially we want to activate branch2
-            rootBlackboard.Set("branch2", true);
+            rootBlackboard.SetBlackboardValue("branch2", true);
 
             // start the tree
             behaviorTree.Start();
@@ -124,7 +124,7 @@ namespace NPBehave
             Assert.AreEqual(Node.State.ACTIVE, secondChild.CurrentState);
 
             // change keys so the first conditions get true, too
-            rootBlackboard.Set("branch1", true);
+            rootBlackboard.SetBlackboardValue("branch1", true);
 
             // tick the timer to ensure the blackboard notifies the nodes
             clock.Update(0.1f);

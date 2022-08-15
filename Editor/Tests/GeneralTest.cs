@@ -25,7 +25,7 @@ namespace NPBehave
             TestRoot behaviorTree = new TestRoot(Blackboard, Timer, selector);
 
             // intially we want to activate branch3
-            Blackboard.Set("branch3", true);
+            Blackboard.SetBlackboardValue("branch3", true);
            
             // start the tree
             behaviorTree.Start();
@@ -39,8 +39,8 @@ namespace NPBehave
             Assert.AreEqual(1, thirdChild.DebugNumStartCalls);
 
             // change keys so the first & second conditions get true, too
-            Blackboard.Set("branch1", true);
-            Blackboard.Set("branch2", true);
+            Blackboard.SetBlackboardValue("branch1", true);
+            Blackboard.SetBlackboardValue("branch2", true);
 
             // still the third child should be active, as the blackboard didn't yet notifiy the nodes
             Assert.AreEqual(Node.State.INACTIVE, firstChild.CurrentState);
@@ -62,7 +62,7 @@ namespace NPBehave
             Assert.AreEqual(1, thirdChild.DebugNumStartCalls);
 
             // disable first branch
-            Blackboard.Set("branch1", false);
+            Blackboard.SetBlackboardValue("branch1", false);
             Timer.Update(0.1f);
 
             // and now the second branch should be active

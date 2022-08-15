@@ -7,14 +7,8 @@ namespace NPBehave
         private bool collapse = false;
         public bool Collapse
         {
-            get
-            {
-                return collapse;
-            }
-            set
-            {
-                collapse = value;
-            }
+            get => collapse;
+            set => collapse = value;
         }
 
         public Container(string name) : base(name)

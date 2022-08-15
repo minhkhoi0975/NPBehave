@@ -51,7 +51,7 @@
             {
                 if (this.blackboardKey != null)
                 {
-                    seconds = Blackboard.Get<float>(this.blackboardKey);
+                    seconds = Blackboard.GetBlackboardValue<float>(this.blackboardKey);
                 }
                 else if (this.function != null)
                 {
