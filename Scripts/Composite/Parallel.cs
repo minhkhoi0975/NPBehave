@@ -42,7 +42,7 @@ namespace NPBehave
 
         protected override void DoStart()
         {
-            foreach (Node child in Children)
+            foreach (Node child in children)
             {
                 Assert.AreEqual(child.CurrentState, State.INACTIVE);
             }
@@ -51,7 +51,7 @@ namespace NPBehave
             runningCount = 0;
             succeededCount = 0;
             failedCount = 0;
-            foreach (Node child in this.Children)
+            foreach (Node child in this.children)
             {
                 runningCount++;
                 child.Start();
@@ -62,7 +62,7 @@ namespace NPBehave
         {
             Assert.IsTrue(runningCount + succeededCount + failedCount == childrenCount);
 
-            foreach (Node child in this.Children)
+            foreach (Node child in this.children)
             {
                 if (child.IsActive)
                 {
@@ -128,7 +128,7 @@ namespace NPBehave
 
                     if (childrenAborted)
                     {
-                        foreach (Node currentChild in this.Children)
+                        foreach (Node currentChild in this.children)
                         {
                             if (currentChild.IsActive)
                             {

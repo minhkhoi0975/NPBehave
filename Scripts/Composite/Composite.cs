@@ -4,14 +4,14 @@ namespace NPBehave
 {
     public abstract class Composite : Container
     {
-        protected Node[] Children;
+        protected Node[] children;
 
         public Composite(string name, Node[] children) : base(name)
         {
-            this.Children = children;
+            this.children = children;
             Assert.IsTrue(children.Length > 0, "Composite nodes (Selector, Sequence, Parallel) need at least one child!");
 
-            foreach (Node node in Children)
+            foreach (Node node in this.children)
             {
                 node.SetParent(this);
             }
@@ -21,7 +21,7 @@ namespace NPBehave
         {
             base.SetRoot(rootNode);
 
-            foreach (Node node in Children)
+            foreach (Node node in children)
             {
                 node.SetRoot(rootNode);
             }
@@ -33,7 +33,7 @@ namespace NPBehave
         {
             get
             {
-                return this.Children;
+                return this.children;
             }
         }
 
@@ -53,7 +53,7 @@ namespace NPBehave
 
         protected override void Stopped(bool success)
         {
-            foreach (Node child in Children)
+            foreach (Node child in children)
             {
                 child.ParentCompositeStopped(this);
             }

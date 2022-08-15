@@ -8,13 +8,12 @@ namespace NPBehave
     {
         private int currentIndex = -1;
 
-        public Sequence(params Node[] children) : base("Sequence", children)
-        {
-        }
+        public Sequence(params Node[] children) : base("Sequence", children) {}
+        public Sequence(string name, params Node[] children) : base(name, children) {}
 
         protected override void DoStart()
         {
-            foreach (Node child in Children)
+            foreach (Node child in children)
             {
                 Assert.AreEqual(child.CurrentState, State.INACTIVE);
             }
@@ -26,7 +25,7 @@ namespace NPBehave
 
         protected override void DoStop()
         {
-            Children[currentIndex].Stop();
+            children[currentIndex].Stop();
         }
 
 
@@ -44,7 +43,7 @@ namespace NPBehave
 
         private void ProcessChildren()
         {
-            if (++currentIndex < Children.Length)
+            if (++currentIndex < children.Length)
             {
                 if (IsStopRequested)
                 {
@@ -52,7 +51,7 @@ namespace NPBehave
                 }
                 else
                 {
-                    Children[currentIndex].Start();
+                    children[currentIndex].Start();
                 }
             }
             else
@@ -65,7 +64,7 @@ namespace NPBehave
         {
             int indexForChild = 0;
             bool found = false;
-            foreach (Node currentChild in Children)
+            foreach (Node currentChild in children)
             {
                 if (currentChild == abortForChild)
                 {
@@ -83,7 +82,7 @@ namespace NPBehave
                     }
                     else
                     {
-                        currentIndex = Children.Length;
+                        currentIndex = children.Length;
                     }
                     currentChild.Stop();
                     break;

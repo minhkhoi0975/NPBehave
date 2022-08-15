@@ -23,7 +23,7 @@ namespace NPBehave
         public RandomSelector(params Node[] children) : base("Random Selector", children)
         {
             randomizedOrder = new int[children.Length];
-            for (int i = 0; i < Children.Length; i++)
+            for (int i = 0; i < base.children.Length; i++)
             {
                 randomizedOrder[i] = i;
             }
@@ -32,7 +32,7 @@ namespace NPBehave
 
         protected override void DoStart()
         {
-            foreach (Node child in Children)
+            foreach (Node child in children)
             {
                 Assert.AreEqual(child.CurrentState, State.INACTIVE);
             }
@@ -56,7 +56,7 @@ namespace NPBehave
 
         protected override void DoStop()
         {
-            Children[randomizedOrder[currentIndex]].Stop();
+            children[randomizedOrder[currentIndex]].Stop();
         }
 
         protected override void DoChildStopped(Node child, bool result)
@@ -73,7 +73,7 @@ namespace NPBehave
 
         private void ProcessChildren()
         {
-            if (++currentIndex < Children.Length)
+            if (++currentIndex < children.Length)
             {
                 if (IsStopRequested)
                 {
@@ -81,7 +81,7 @@ namespace NPBehave
                 }
                 else
                 {
-                    Children[randomizedOrder[currentIndex]].Start();
+                    children[randomizedOrder[currentIndex]].Start();
                 }
             }
             else
@@ -94,7 +94,7 @@ namespace NPBehave
         {
             int indexForChild = 0;
             bool found = false;
-            foreach (Node currentChild in Children)
+            foreach (Node currentChild in children)
             {
                 if (currentChild == abortForChild)
                 {
@@ -112,7 +112,7 @@ namespace NPBehave
                     }
                     else
                     {
-                        currentIndex = Children.Length;
+                        currentIndex = children.Length;
                     }
                     currentChild.Stop();
                     break;
